@@ -18,12 +18,17 @@ class Snake:
     def init_snake(self):
         current_xpos = START_XPOS
         for i in range(3):
-            segment = Turtle("square")
-            segment.color("white")
-            segment.penup()
+            segment = self.make_single_part()
             segment.goto(current_xpos, START_YPOS)
             current_xpos -= UNIT_SIZE
             self.parts.append(segment)
+
+    def make_single_part(self):
+        segment = Turtle("square")
+        segment.color("white")
+        segment.speed("fastest")
+        segment.penup()
+        return segment
 
     def move(self):
         for index in range(len(self.parts) - 1, 0, -1):
@@ -31,6 +36,10 @@ class Snake:
             new_ypos = self.parts[index - 1].ycor()
             self.parts[index].goto(new_xpos, new_ypos)
         self.head.fd(UNIT_SIZE)
+
+    def add_part(self):
+        new_part = self.make_single_part()
+        self.parts.append(new_part)
 
     def move_up(self):
         if self.head.heading() != DOWN:
